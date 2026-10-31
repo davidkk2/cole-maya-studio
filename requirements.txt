@@ -1,3 +1,4 @@
 edge-tts>=6.1.12
+kokoro-onnx>=0.4.7
 Pillow>=10.0.0
 numpy>=1.26.0

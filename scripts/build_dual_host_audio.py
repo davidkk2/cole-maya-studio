@@ -11,8 +11,11 @@ import asyncio
 import json
 import os
 import subprocess
+import urllib.request
+import wave
 from pathlib import Path
 import edge_tts
+import numpy as np
 
 VOICE_MAP = {
     "cole": "en-US-AndrewMultilingualNeural",
@@ -23,6 +26,50 @@ RATE_MAP = {
     "cole": "+3%",
     "maya": "+4%",
 }
+
+KOKORO_VOICE_MAP = {
+    "cole": ("am_michael", 1.05),
+    "maya": ("af_heart", 1.06),
+}
+
+_KOKORO_INSTANCE = None
+
+
+def get_kokoro_engine():
+    global _KOKORO_INSTANCE
+    if _KOKORO_INSTANCE is not None:
+        return _KOKORO_INSTANCE
+
+    from kokoro_onnx import Kokoro
+
+    cache_dir = Path.home() / ".cache" / "kokoro-onnx"
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    model_path = cache_dir / "kokoro-v1.0.int8.onnx"
+    voices_path = cache_dir / "voices-v1.0.bin"
+    base_url = "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/"
+
+    for fname, dest in [
+        ("kokoro-v1.0.int8.onnx", model_path),
+        ("voices-v1.0.bin", voices_path),
+    ]:
+        if not dest.exists() or dest.stat().st_size < 1024:
+            print(f"  [kokoro-tts] Downloading neural model asset: {fname} ...")
+            urllib.request.urlretrieve(base_url + fname, dest)
+
+    _KOKORO_INSTANCE = Kokoro(str(model_path), str(voices_path))
+    return _KOKORO_INSTANCE
+
+
+def synthesize_with_kokoro_to_wav(text: str, speaker: str, out_raw_wav: Path) -> None:
+    kokoro = get_kokoro_engine()
+    voice_name, speed = KOKORO_VOICE_MAP.get(speaker, ("am_michael", 1.05))
+    samples, sr = kokoro.create(text, voice=voice_name, speed=speed, lang="en-us")
+    pcm16 = (np.clip(samples, -1.0, 1.0) * 32767.0).astype(np.int16)
+    with wave.open(str(out_raw_wav), "wb") as wf:
+        wf.setnchannels(1)
+        wf.setsampwidth(2)
+        wf.setframerate(int(sr))
+        wf.writeframes(pcm16.tobytes())
 
 
 def find_ffmpeg() -> str:
@@ -106,19 +153,40 @@ async def synthesize_dialogue_lines(
         capture_output=True,
     )
 
+    prefer_kokoro = (
+        os.environ.get("GITHUB_ACTIONS", "").lower() == "true"
+        or os.environ.get("USE_KOKORO_TTS", "") == "1"
+    )
+
     for idx, item in enumerate(lines):
         speaker = item["speaker"]
         text = item["text"]
         mp3_path = tmp_dir / f"line_{idx:04d}_{speaker}.mp3"
+        raw_tts_path = mp3_path
         wav_path = tmp_dir / f"line_{idx:04d}_{speaker}.wav"
 
-        if not mp3_path.exists():
-            comm = edge_tts.Communicate(
-                text=text,
-                voice=VOICE_MAP[speaker],
-                rate=RATE_MAP[speaker],
-            )
-            await comm.save(str(mp3_path))
+        if prefer_kokoro:
+            raw_kokoro_wav = tmp_dir / f"line_{idx:04d}_{speaker}_24k.wav"
+            if not raw_kokoro_wav.exists():
+                synthesize_with_kokoro_to_wav(text, speaker, raw_kokoro_wav)
+            raw_tts_path = raw_kokoro_wav
+        else:
+            if not mp3_path.exists():
+                try:
+                    comm = edge_tts.Communicate(
+                        text=text,
+                        voice=VOICE_MAP[speaker],
+                        rate=RATE_MAP[speaker],
+                    )
+                    await comm.save(str(mp3_path))
+                except Exception as exc:
+                    print(
+                        f"  [tts-fallback] edge-tts unavailable ({type(exc).__name__}), switching to Kokoro-ONNX neural studio voices..."
+                    )
+                    prefer_kokoro = True
+                    raw_kokoro_wav = tmp_dir / f"line_{idx:04d}_{speaker}_24k.wav"
+                    synthesize_with_kokoro_to_wav(text, speaker, raw_kokoro_wav)
+                    raw_tts_path = raw_kokoro_wav
 
         # Clean 48kHz stereo broadcast conversion (compatible with Remotion's minimal ffmpeg build)
         subprocess.run(
@@ -126,7 +194,7 @@ async def synthesize_dialogue_lines(
                 ffmpeg,
                 "-y",
                 "-i",
-                str(mp3_path),
+                str(raw_tts_path),
                 "-af",
                 "aresample=48000,pan=stereo|c0=c0|c1=c0",
                 str(wav_path),
