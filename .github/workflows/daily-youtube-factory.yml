@@ -50,18 +50,29 @@ jobs:
           python-version: "3.12"
           cache: "pip"
 
-      - name: Install FFmpeg & Headless Chromium system libraries
+      - name: Ensure FFmpeg & Chromium OS libraries
         run: |
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg
-          sudo npx --yes playwright@latest install-deps chromium
+          if ! command -v ffmpeg >/dev/null 2>&1; then
+            sudo apt-get update && sudo apt-get install -y ffmpeg
+          fi
+          if ! command -v google-chrome >/dev/null 2>&1; then
+            sudo npx --yes playwright@latest install-deps chromium
+          fi
 
       - name: Install Node & Python dependencies
         run: |
           npm ci
           python3 -m pip install --upgrade pip
           python3 -m pip install -r requirements.txt
-          npx remotion browser ensure
+
+      - name: Cache Remotion Chrome Headless Shell
+        uses: actions/cache@v4
+        with:
+          path: node_modules/.remotion
+          key: remotion-headless-shell-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Ensure Remotion Headless Browser
+        run: npx remotion browser ensure
 
       - name: Determine active production slot
         id: resolve_slot
