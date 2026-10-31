@@ -1,0 +1,96 @@
+name: Cole & Maya — Autonomous Daily YouTube Factory (1 Main + 3 Shorts)
+
+on:
+  schedule:
+    # 1) Shorts #1 -> Morning US Commute (Schedules for 09:00 America/New_York)
+    - cron: "30 11 * * *"
+    # 2) Shorts #2 -> Midday US Feed (Schedules for 13:00 America/New_York)
+    - cron: "30 15 * * *"
+    # 3) Main 16:9 Documentary -> US Evening Prime-Time (Schedules for 17:00 America/New_York)
+    - cron: "30 18 * * *"
+    # 4) Shorts #3 -> Late Evening US Scroll (Schedules for 21:00 America/New_York)
+    - cron: "30 23 * * *"
+
+  workflow_dispatch:
+    inputs:
+      slot:
+        description: "Üretilecek yayın dilimi (short1, short2, main, short3 veya all)"
+        required: true
+        default: "short1"
+        type: choice
+        options:
+          - short1
+          - short2
+          - main
+          - short3
+          - all
+
+concurrency:
+  group: cole-maya-youtube-factory
+  cancel-in-progress: false
+
+jobs:
+  produce-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout studio repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install FFmpeg & Headless Chromium system libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          sudo npx --yes playwright@latest install-deps chromium
+
+      - name: Install Node & Python dependencies
+        run: |
+          npm ci
+          python3 -m pip install --upgrade pip
+          python3 -m pip install edge-tts pillow numpy
+          npx remotion browser ensure
+
+      - name: Determine active production slot
+        id: resolve_slot
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "target=${{ github.event.inputs.slot }}" >> "$GITHUB_OUTPUT"
+          else
+            case "${{ github.event.schedule }}" in
+              "30 11 * * *") echo "target=short1" >> "$GITHUB_OUTPUT" ;;
+              "30 15 * * *") echo "target=short2" >> "$GITHUB_OUTPUT" ;;
+              "30 18 * * *") echo "target=main"   >> "$GITHUB_OUTPUT" ;;
+              "30 23 * * *") echo "target=short3" >> "$GITHUB_OUTPUT" ;;
+              *)             echo "target=short1" >> "$GITHUB_OUTPUT" ;;
+            esac
+          fi
+
+      - name: Run Cole & Maya Autonomous Producer + YouTube Scheduler
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: |
+          TARGET="${{ steps.resolve_slot.outputs.target }}"
+          if [ "$TARGET" = "all" ]; then
+            node scripts/auto_cloud_producer.mjs --slot short1 --upload
+            node scripts/auto_cloud_producer.mjs --slot short2 --upload
+            node scripts/auto_cloud_producer.mjs --slot main   --upload
+            node scripts/auto_cloud_producer.mjs --slot short3 --upload
+          else
+            node scripts/auto_cloud_producer.mjs --slot "$TARGET" --upload
+          fi

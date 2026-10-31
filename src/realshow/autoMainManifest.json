@@ -1,0 +1,35 @@
+{
+  "episodeTitle": "FOLLOW THE PRIMARY RECORD",
+  "categoryTag": "INVESTIGATION",
+  "totalDurationSec": 12,
+  "cues": [
+    {
+      "id": "c01",
+      "speaker": "cole",
+      "startSec": 0.4,
+      "endSec": 5.8,
+      "text": "Every week, viral headlines bury the primary documents that actually move global power.",
+      "expression": "serious"
+    },
+    {
+      "id": "c02",
+      "speaker": "maya",
+      "startSec": 6.1,
+      "endSec": 11.6,
+      "text": "Here in the studio, we pull the timestamped records and archival footage to show what really happened.",
+      "expression": "emphatic"
+    }
+  ],
+  "shots": [
+    {
+      "id": "s01",
+      "startSec": 0,
+      "endSec": 12,
+      "layout": "studio_dual",
+      "monitorMediaPath": "studio/studio_set_1080p.jpg",
+      "locationDate": "MANHATTAN STUDIO · PRIMARY RECORD",
+      "headline": "AUTONOMOUS CLOUD INVESTIGATION READY"
+    }
+  ],
+  "chapters": []
+}

@@ -1,0 +1,622 @@
+{
+  "episodeTitle": "WHY EUROPE'S CENTRAL BANK CHIEF QUIT EARLY",
+  "categoryTag": "INVESTIGATION",
+  "masterAudioPath": "episodes/ep01_lagarde/master_audio.mp3",
+  "totalDurationSec": 325.92,
+  "cues": [
+    {
+      "id": "c01",
+      "speaker": "cole",
+      "startSec": 0.35,
+      "endSec": 8.534,
+      "text": "On October twenty-ninth, one of the most powerful central bankers on Earth posted a forty-five-second video that stopped global markets cold.",
+      "expression": "serious"
+    },
+    {
+      "id": "c02",
+      "speaker": "maya",
+      "startSec": 8.794,
+      "endSec": 18.442,
+      "text": "European Central Bank President Christine Lagarde announced she is stepping down on February seventh, twenty twenty-seven — nearly nine months before her term actually ends.",
+      "expression": "curious"
+    },
+    {
+      "id": "c03",
+      "speaker": "cole",
+      "startSec": 18.702,
+      "endSec": 26.838,
+      "text": "Almost fifteen million people watched that clip within forty-eight hours. Not because of monetary policy — because of how it looked.",
+      "expression": "emphatic"
+    },
+    {
+      "id": "c04",
+      "speaker": "maya",
+      "startSec": 27.098,
+      "endSec": 36.914,
+      "text": "Surgical bandages across her left cheek. A wired lapel mic hanging outside her collar. And a tiny owl figurine sitting on the cabinet behind her.",
+      "expression": "skeptical"
+    },
+    {
+      "id": "c05",
+      "speaker": "cole",
+      "startSec": 37.174,
+      "endSec": 45.622,
+      "text": "Within hours, viral threads were calling it a coded hostage video — claiming secret operatives had seized Europe's central bank from the inside.",
+      "expression": "serious"
+    },
+    {
+      "id": "c06",
+      "speaker": "maya",
+      "startSec": 45.882,
+      "endSec": 57.714,
+      "text": "Except when we pulled the primary records, we found two completely different stories: a viral fantasy that falls apart in sixty seconds, and a real political power play hiding in plain sight.",
+      "expression": "emphatic"
+    },
+    {
+      "id": "c07",
+      "speaker": "cole",
+      "startSec": 57.974,
+      "endSec": 66.662,
+      "text": "Let's start with the viral screenshot itself — nearly eight hundred thousand views on a single post dissecting every pixel behind Lagarde's shoulder.",
+      "expression": "curious"
+    },
+    {
+      "id": "c08",
+      "speaker": "maya",
+      "startSec": 66.922,
+      "endSec": 76.618,
+      "text": "Online code-hunters counted seventeen pearls on her necklace, drew red boxes around clouds in her painting, and claimed the bandages were proof of forced submission.",
+      "expression": "skeptical"
+    },
+    {
+      "id": "c09",
+      "speaker": "cole",
+      "startSec": 76.878,
+      "endSec": 85.35,
+      "text": "What none of those viral screenshots included was the timestamped reply Lagarde posted literally thirty-two seconds after her video went live.",
+      "expression": "serious"
+    },
+    {
+      "id": "c10",
+      "speaker": "maya",
+      "startSec": 85.61,
+      "endSec": 95.738,
+      "text": "At ten-oh-three UTC, she wrote directly that the plasters came from a minor skin-cancer removal earlier that week, joking to staff she hadn't been kickboxing in Thailand.",
+      "expression": "neutral"
+    },
+    {
+      "id": "c11",
+      "speaker": "cole",
+      "startSec": 95.998,
+      "endSec": 103.942,
+      "text": "Okay, fair enough on the bandage. What about that owl statue on her credenza that threads linked to secret California rituals?",
+      "expression": "curious"
+    },
+    {
+      "id": "c12",
+      "speaker": "maya",
+      "startSec": 104.202,
+      "endSec": 113.562,
+      "text": "That's the funniest part. When Lagarde took over the European Central Bank in twenty nineteen, reporters asked if she was an inflation hawk or a stimulus dove.",
+      "expression": "emphatic"
+    },
+    {
+      "id": "c13",
+      "speaker": "cole",
+      "startSec": 113.822,
+      "endSec": 123.038,
+      "text": "And she told the entire press corps on camera: 'I am neither a hawk nor a dove — I am an owl,' referencing Athena's ancient symbol of wisdom.",
+      "expression": "shocked"
+    },
+    {
+      "id": "c14",
+      "speaker": "maya",
+      "startSec": 123.298,
+      "endSec": 132.034,
+      "text": "Visiting diplomats have gifted her ceramic owls for seven straight years. It wasn't a hidden hostage prop — it's literally her public nickname.",
+      "expression": "skeptical"
+    },
+    {
+      "id": "c15",
+      "speaker": "cole",
+      "startSec": 132.294,
+      "endSec": 141.366,
+      "text": "Which brings us to the real question nobody counting pearls bothered to ask: why resign on February seventh, twenty twenty-seven instead of October?",
+      "expression": "emphatic"
+    },
+    {
+      "id": "c16",
+      "speaker": "maya",
+      "startSec": 141.626,
+      "endSec": 149.594,
+      "text": "Pull up the European political calendar, and those nine months change who controls the world's second-largest reserve currency for the next eight years.",
+      "expression": "serious"
+    },
+    {
+      "id": "c17",
+      "speaker": "cole",
+      "startSec": 149.854,
+      "endSec": 157.294,
+      "text": "In April twenty twenty-seven — just eight weeks after Lagarde's new exit date — France holds its next presidential election.",
+      "expression": "serious"
+    },
+    {
+      "id": "c18",
+      "speaker": "maya",
+      "startSec": 157.554,
+      "endSec": 167.082,
+      "text": "President Emmanuel Macron is constitutionally barred from running for a third consecutive term, and nationalist challenger Marine Le Pen has led national polling.",
+      "expression": "curious"
+    },
+    {
+      "id": "c19",
+      "speaker": "cole",
+      "startSec": 167.342,
+      "endSec": 175.814,
+      "text": "Under European Union treaties, the next Central Bank President is chosen by eurozone heads of state for a non-renewable eight-year mandate.",
+      "expression": "emphatic"
+    },
+    {
+      "id": "c20",
+      "speaker": "maya",
+      "startSec": 176.074,
+      "endSec": 185.41,
+      "text": "If Lagarde waited until October twenty twenty-seven, Paris could have a eurosceptic president sitting at the summit table with veto leverage over her replacement.",
+      "expression": "serious"
+    },
+    {
+      "id": "c21",
+      "speaker": "cole",
+      "startSec": 185.67,
+      "endSec": 194.886,
+      "text": "By stepping aside in February, Macron and Berlin get to lock in the next central bank chief through twenty thirty-five before a single French ballot is cast.",
+      "expression": "neutral"
+    },
+    {
+      "id": "c22",
+      "speaker": "maya",
+      "startSec": 195.146,
+      "endSec": 202.13,
+      "text": "No secret blackouts. No hidden morse code. Just hard institutional chess played out in broad daylight.",
+      "expression": "emphatic"
+    },
+    {
+      "id": "c23",
+      "speaker": "cole",
+      "startSec": 202.39,
+      "endSec": 212.398,
+      "text": "And yet hundreds of thousands of people preferred the hostage myth — the comforting idea that secret insiders are quietly fixing everything behind the curtain.",
+      "expression": "curious"
+    },
+    {
+      "id": "c24",
+      "speaker": "maya",
+      "startSec": 212.658,
+      "endSec": 222.354,
+      "text": "Intelligence historians actually have a name for that exact psychological trap. Because in nineteen twenty-one, Moscow built an entire spy operation around it.",
+      "expression": "serious"
+    },
+    {
+      "id": "c25",
+      "speaker": "cole",
+      "startSec": 222.614,
+      "endSec": 234.734,
+      "text": "After the Russian Civil War, Soviet secret police chief Felix Dzerzhinsky faced thousands of anti-Bolshevik exiles in Paris, Berlin, and London plotting to topple his regime.",
+      "expression": "serious"
+    },
+    {
+      "id": "c26",
+      "speaker": "maya",
+      "startSec": 234.994,
+      "endSec": 245.506,
+      "text": "Instead of hunting them abroad, Dzerzhinsky's counterintelligence headquarters at Lubyanka invented a fake patriotic underground inside Russia — code-named Operation Trust.",
+      "expression": "emphatic"
+    },
+    {
+      "id": "c27",
+      "speaker": "cole",
+      "startSec": 245.766,
+      "endSec": 255.726,
+      "text": "Soviet double agents traveled to Western capitals whispering one seductive message to dissidents and British intelligence: stand down and trust the plan.",
+      "expression": "curious"
+    },
+    {
+      "id": "c28",
+      "speaker": "maya",
+      "startSec": 255.986,
+      "endSec": 264.146,
+      "text": "They claimed secret patriots had already infiltrated Moscow's ministries, so any real resistance from the outside would only ruin the operation.",
+      "expression": "skeptical"
+    },
+    {
+      "id": "c29",
+      "speaker": "cole",
+      "startSec": 264.406,
+      "endSec": 275.11,
+      "text": "It worked with devastating precision. In nineteen twenty-four, exiled resistance leader Boris Savinkov was lured back into Moscow by Trust operatives and arrested on arrival.",
+      "expression": "shocked"
+    },
+    {
+      "id": "c30",
+      "speaker": "maya",
+      "startSec": 275.37,
+      "endSec": 284.922,
+      "text": "A year later, legendary British MI6 spy Sidney Reilly crossed the border to meet the fake underground council — walking straight into a Lubyanka cell.",
+      "expression": "serious"
+    },
+    {
+      "id": "c31",
+      "speaker": "cole",
+      "startSec": 285.182,
+      "endSec": 294.806,
+      "text": "By the time a defector exposed Operation Trust in nineteen twenty-seven, six years had passed, real opposition was paralyzed, and state power was cemented.",
+      "expression": "emphatic"
+    },
+    {
+      "id": "c32",
+      "speaker": "maya",
+      "startSec": 295.066,
+      "endSec": 303.802,
+      "text": "A century later, you don't even need an intelligence agency to run that playbook. Viral algorithms generate the exact same lullaby for clicks.",
+      "expression": "skeptical"
+    },
+    {
+      "id": "c33",
+      "speaker": "cole",
+      "startSec": 304.062,
+      "endSec": 314.358,
+      "text": "Every time a rumor promises ten days of darkness or secret saviors behind a pearl necklace, it trains millions of citizens to watch shadows instead of treaties.",
+      "expression": "serious"
+    },
+    {
+      "id": "c34",
+      "speaker": "maya",
+      "startSec": 314.618,
+      "endSec": 324.722,
+      "text": "Because in the real world, power doesn't hide in cloud paintings. It moves on February seventh, right on the official calendar. See you on the next investigation.",
+      "expression": "emphatic"
+    }
+  ],
+  "shots": [
+    {
+      "startSec": 0.0,
+      "endSec": 8.664,
+      "id": "s01_studio_cold_open",
+      "layout": "studio_dual",
+      "monitorMediaPath": "episodes/ep01_lagarde/lagarde_exit_poster.jpg",
+      "locationDate": "FRANKFURT · OCT 29, 2026",
+      "headline": "SURPRISE EARLY EXIT AT EUROPE'S CENTRAL BANK"
+    },
+    {
+      "startSec": 8.664,
+      "endSec": 26.968,
+      "id": "s02_lagarde_real_video",
+      "layout": "real_video_pip",
+      "mediaPath": "episodes/ep01_lagarde/lagarde_exit_2026_9x16.mp4",
+      "verticalSocialVideo": true,
+      "videoTrimStartSec": 0.5,
+      "pipHost": "maya",
+      "sourceTag": "OFFICIAL STATEMENT · @LAGARDE",
+      "locationDate": "OCT 29, 2026 · 14.7M VIEWS",
+      "headline": "STEPPING DOWN FEB 7, 2027 (9 MONTHS EARLY)"
+    },
+    {
+      "startSec": 26.968,
+      "endSec": 37.044,
+      "id": "s03_lagarde_video_closeup",
+      "layout": "real_video_pip",
+      "mediaPath": "episodes/ep01_lagarde/lagarde_exit_2026_9x16.mp4",
+      "verticalSocialVideo": true,
+      "videoTrimStartSec": 11.0,
+      "pipHost": "maya",
+      "sourceTag": "PRIMARY VIDEO RECORD · ECB",
+      "locationDate": "FRANKFURT AM MAIN",
+      "headline": "BANDAGES, EXPOSED MIC CORD & DESK OWL"
+    },
+    {
+      "startSec": 37.044,
+      "endSec": 57.844,
+      "id": "s04_studio_thesis",
+      "layout": "studio_dual",
+      "monitorMediaPath": "episodes/ep01_lagarde/ecb_frankfurt_hq.jpg",
+      "locationDate": "MANHATTAN STUDIO · INVESTIGATION",
+      "headline": "VIRAL FANTASY VS. REAL CENTRAL BANK CHESS"
+    },
+    {
+      "startSec": 57.844,
+      "endSec": 76.748,
+      "id": "s05_viral_redbox_split",
+      "layout": "real_split_evidence",
+      "mediaPath": "episodes/ep01_lagarde/viral_redbox_claim.jpg",
+      "pipHost": "cole",
+      "sourceTag": "VIRAL THREAD · OCT 30, 2026 (783K VIEWS)",
+      "headline": "THE VIRAL 'CODED HOSTAGE VIDEO' CLAIMS",
+      "facts": [
+        {
+          "label": "VIRAL CLAIM #1",
+          "value": "Facial Bandage & '17 Pearls' = Secret Arrest Signal",
+          "accent": "red"
+        },
+        {
+          "label": "VIRAL CLAIM #2",
+          "value": "Desk Owl & Cloud Painting = Hidden Ritual Message",
+          "accent": "amber"
+        }
+      ],
+      "notes": [
+        "Within 24 hours, posts across Europe and the U.S. framed a central bank resignation as a covert military takeover."
+      ],
+      "mediaFit": "contain"
+    },
+    {
+      "startSec": 76.748,
+      "endSec": 95.868,
+      "id": "s06_surgery_receipt_split",
+      "layout": "real_split_evidence",
+      "mediaPath": "episodes/ep01_lagarde/lagarde_exit_poster.jpg",
+      "pipHost": "maya",
+      "sourceTag": "TIMESTAMPED REPLY · +32 SECONDS",
+      "headline": "FACT CHECK #1: THE 32-SECOND MEDICAL RECEIPT",
+      "facts": [
+        {
+          "label": "VIDEO POSTED (UTC)",
+          "value": "Oct 29, 2026 · 10:03:07 AM (@Lagarde)",
+          "accent": "cyan"
+        },
+        {
+          "label": "MEDICAL NOTE POSTED",
+          "value": "10:03:39 AM — Minor Skin-Cancer Procedure",
+          "accent": "amber"
+        }
+      ],
+      "notes": [
+        "Lagarde publicly explained the surgical plasters half a minute after posting — urging viewers to get regular skin checks."
+      ],
+      "mediaObjectPosition": "50% 18%"
+    },
+    {
+      "startSec": 95.868,
+      "endSec": 104.072,
+      "id": "s07_studio_cole_owl_question",
+      "layout": "studio_solo_cole",
+      "monitorMediaPath": "episodes/ep01_lagarde/athena_owl_coin.jpg",
+      "locationDate": "EVIDENCE CHECK · SYMBOLISM",
+      "headline": "WHY IS THERE AN OWL ON HER CREDENZA?"
+    },
+    {
+      "startSec": 104.072,
+      "endSec": 132.164,
+      "id": "s08_athena_owl_split",
+      "layout": "real_split_evidence",
+      "mediaPath": "episodes/ep01_lagarde/athena_owl_coin.jpg",
+      "pipHost": "maya",
+      "sourceTag": "ATHENIAN TETRADRACHM · SYMBOL OF WISDOM",
+      "headline": "FACT CHECK #2: LAGARDE'S 2019 'OWL' DOCTRINE",
+      "facts": [
+        {
+          "label": "OFFICIAL ECB QUOTE (2019)",
+          "value": "\"I'm neither a hawk nor a dove — I'm an owl.\"",
+          "accent": "cyan"
+        },
+        {
+          "label": "SEVEN-YEAR PUBLIC HABIT",
+          "value": "Diplomats & Staff Gift Owls for Her Frankfurt Desk",
+          "accent": "amber"
+        }
+      ],
+      "notes": [
+        "Central bankers use 'hawks' and 'doves' for rate policy; Lagarde publicly adopted Athena's owl on day one in 2019."
+      ]
+    },
+    {
+      "startSec": 132.164,
+      "endSec": 141.496,
+      "id": "s09_studio_real_question",
+      "layout": "studio_dual",
+      "monitorMediaPath": "episodes/ep01_lagarde/lagarde_eu_2025.jpg",
+      "locationDate": "ACT III · FOLLOW THE CALENDAR",
+      "headline": "WHY FEBRUARY 7, 2027 INSTEAD OF OCTOBER?"
+    },
+    {
+      "startSec": 141.496,
+      "endSec": 149.724,
+      "id": "s10_frankfurt_skyline_video",
+      "layout": "real_video_pip",
+      "mediaPath": "episodes/ep01_lagarde/frankfurt_skyline_1080p.mp4",
+      "videoTrimStartSec": 0.5,
+      "pipHost": "maya",
+      "sourceTag": "REAL 5K CINEMA FOOTAGE · CC BY-SA 3.0",
+      "locationDate": "FRANKFURT FINANCIAL DISTRICT · EUROZONE",
+      "headline": "CONTROLLING THE WORLD'S #2 RESERVE CURRENCY"
+    },
+    {
+      "startSec": 149.724,
+      "endSec": 167.212,
+      "id": "s11_macron_summit_photo",
+      "layout": "real_photo_pip",
+      "mediaPath": "episodes/ep01_lagarde/macron_eu_summit_2025.jpg",
+      "pipHost": "cole",
+      "sourceTag": "EUROPEAN COUNCIL ARCHIVE · BRUSSELS",
+      "locationDate": "FRANCE PRESIDENTIAL VOTE · APRIL 2027",
+      "headline": "MACRON IS TERM-LIMITED EIGHT WEEKS LATER"
+    },
+    {
+      "startSec": 167.212,
+      "endSec": 185.54,
+      "id": "s12_le_pen_veto_split",
+      "layout": "real_split_evidence",
+      "mediaPath": "episodes/ep01_lagarde/marine_le_pen_2026.jpg",
+      "pipHost": "maya",
+      "sourceTag": "FRENCH ELECTORAL CALENDAR · 2027",
+      "headline": "THE 8-YEAR SUCCESSION WINDOW (2027–2035)",
+      "facts": [
+        {
+          "label": "ORIGINAL EXIT (OCT 2027)",
+          "value": "After French Election — Risk of Eurosceptic Veto",
+          "accent": "red"
+        },
+        {
+          "label": "NEW EXIT (FEB 7, 2027)",
+          "value": "Before Election — Macron & EU Leaders Pick Successor",
+          "accent": "cyan"
+        }
+      ],
+      "notes": [
+        "Under EU treaties, the ECB presidency is a non-renewable 8-year seat negotiated directly among eurozone leaders."
+      ],
+      "mediaObjectPosition": "50% 14%"
+    },
+    {
+      "startSec": 185.54,
+      "endSec": 202.26,
+      "id": "s13_ecb_tower_photo",
+      "layout": "real_photo_pip",
+      "mediaPath": "episodes/ep01_lagarde/ecb_frankfurt_hq.jpg",
+      "pipHost": "cole",
+      "sourceTag": "EUROPEAN CENTRAL BANK · FRANKFURT",
+      "locationDate": "MANDATE LOCKED THROUGH 2035",
+      "headline": "INSTITUTIONAL POWER PLAY IN BROAD DAYLIGHT"
+    },
+    {
+      "startSec": 202.26,
+      "endSec": 222.484,
+      "id": "s14_studio_pivot_1921",
+      "layout": "studio_dual",
+      "monitorMediaPath": "episodes/ep01_lagarde/dzerzhinsky_1926.jpg",
+      "locationDate": "MOSCOW · 1921 COUNTERINTELLIGENCE FILE",
+      "headline": "THE PSYCHOLOGY OF 'SIT BACK & TRUST THE PLAN'"
+    },
+    {
+      "startSec": 222.484,
+      "endSec": 234.864,
+      "id": "s15_dzerzhinsky_archive",
+      "layout": "real_photo_pip",
+      "mediaPath": "episodes/ep01_lagarde/dzerzhinsky_1926.jpg",
+      "pipHost": "cole",
+      "sourceTag": "STATE MILITARY ARCHIVE · PUBLIC DOMAIN (1926)",
+      "locationDate": "FELIX DZERZHINSKY · CHEKA / OGPU CHIEF",
+      "headline": "ARCHITECT OF SOVIET DECEPTION OPERATIONS"
+    },
+    {
+      "startSec": 234.864,
+      "endSec": 264.276,
+      "id": "s16_lubyanka_operation_trust",
+      "layout": "real_split_evidence",
+      "mediaPath": "episodes/ep01_lagarde/lubyanka_hq_moscow.jpg",
+      "pipHost": "maya",
+      "sourceTag": "LUBYANKA HEADQUARTERS · MOSCOW",
+      "headline": "OPERATION TRUST (1921–1926): THE FAKE PATRIOTS",
+      "facts": [
+        {
+          "label": "COVER ORGANIZATION",
+          "value": "'Monarchist Union of Central Russia' (Built by OGPU)",
+          "accent": "amber"
+        },
+        {
+          "label": "CORE DECEPTION MESSAGE",
+          "value": "\"Patriots Control the Inside — Take No Action\"",
+          "accent": "red"
+        }
+      ],
+      "notes": [
+        "Soviet intelligence fabricated an entire internal resistance movement to pacify real exiles and Western spy agencies."
+      ]
+    },
+    {
+      "startSec": 264.276,
+      "endSec": 275.24,
+      "id": "s17_savinkov_trial_1924",
+      "layout": "real_photo_pip",
+      "mediaPath": "episodes/ep01_lagarde/savinkov_trial_1924.jpg",
+      "pipHost": "cole",
+      "sourceTag": "MOSCOW SUPREME TRIBUNAL · AUGUST 1924",
+      "locationDate": "BORIS SAVINKOV CAPTURED",
+      "headline": "LURED ACROSS THE BORDER BY FAKE 'TRUST' AGENTS"
+    },
+    {
+      "startSec": 275.24,
+      "endSec": 285.052,
+      "id": "s18_sidney_reilly_passport",
+      "layout": "real_split_evidence",
+      "mediaPath": "episodes/ep01_lagarde/sidney_reilly_passport_1918.jpg",
+      "pipHost": "maya",
+      "sourceTag": "ARCHIVAL PASSPORT EXHIBIT · SIDNEY REILLY",
+      "headline": "1925: BRITAIN'S 'ACE OF SPIES' WALKS INTO THE TRAP",
+      "facts": [
+        {
+          "label": "TARGET CAPTURED",
+          "value": "Sidney Reilly (British MI6 Master Operative)",
+          "accent": "red"
+        },
+        {
+          "label": "STRATEGIC OUTCOME (1927)",
+          "value": "6 Years of Opposition Paralyzed Without Firing a Shot",
+          "accent": "cyan"
+        }
+      ],
+      "notes": [
+        "Convinced that secret insiders were ready to topple Moscow, Reilly crossed into the USSR in 1925 and never returned."
+      ],
+      "mediaFit": "contain"
+    },
+    {
+      "startSec": 285.052,
+      "endSec": 303.932,
+      "id": "s19_soviet_archival_film",
+      "layout": "real_video_pip",
+      "mediaPath": "episodes/ep01_lagarde/soviet_1920s_reel_1080p.mp4",
+      "videoTrimStartSec": 1.0,
+      "pipHost": "cole",
+      "sourceTag": "PUBLIC DOMAIN ARCHIVAL FILM · 1930",
+      "locationDate": "EARLY SOVIET NEWSREEL ARCHIVE",
+      "headline": "FROM 1921 STATE SPYING TO 2026 VIRAL ALGORITHMS"
+    },
+    {
+      "startSec": 303.932,
+      "endSec": 314.488,
+      "id": "s20_lagarde_eu_wide_closing",
+      "layout": "real_photo_pip",
+      "mediaPath": "episodes/ep01_lagarde/lagarde_eu_2025.jpg",
+      "pipHost": "cole",
+      "sourceTag": "EUROPEAN COMMISSION ARCHIVE · CC BY 4.0",
+      "locationDate": "BRUSSELS / FRANKFURT",
+      "headline": "DISTRACTION MYTHS VS. REAL TREATY POWER",
+      "pipCorner": "bottom-left"
+    },
+    {
+      "startSec": 314.488,
+      "endSec": 325.92,
+      "id": "s21_studio_signoff",
+      "layout": "studio_dual",
+      "monitorMediaPath": "episodes/ep01_lagarde/ecb_frankfurt_hq.jpg",
+      "locationDate": "COLE & MAYA · FINAL VERDICT",
+      "headline": "FEB 7, 2027: REAL POWER MOVES ON THE PUBLIC CALENDAR"
+    }
+  ],
+  "chapters": [
+    {
+      "index": "01",
+      "title": "The 45-Second Exit Video",
+      "subtitle": "FRANKFURT · OCT 29, 2026",
+      "startSec": 8.79
+    },
+    {
+      "index": "02",
+      "title": "Bandages, Pearls & Athena's Owl",
+      "subtitle": "PRIMARY SOURCE FACT-CHECK",
+      "startSec": 57.97
+    },
+    {
+      "index": "03",
+      "title": "The Spring 2027 French Election Window",
+      "subtitle": "REAL CENTRAL BANK CHESS",
+      "startSec": 132.29
+    },
+    {
+      "index": "04",
+      "title": "1921 Moscow: Operation Trust",
+      "subtitle": "DECLASSIFIED ESPIONAGE PARALLEL",
+      "startSec": 212.66
+    }
+  ]
+}

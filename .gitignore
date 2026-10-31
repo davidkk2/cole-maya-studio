@@ -1,0 +1,21 @@
+node_modules
+dist
+.DS_Store
+__pycache__/
+*.pyc
+.env
+secrets
+secrets/
+*client_secret*.json
+*token*.json
+*api_key*.txt
+
+# Output & temporary build directories
+out
+.tmp*
+episodes/auto_*_meta.json
+
+# Keep GitHub repo ultra-lean (~15MB): track public/studio/** only, ignore bulky local episode/legacy caches
+public/archival
+public/audio
+public/episodes

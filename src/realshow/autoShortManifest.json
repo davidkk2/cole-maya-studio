@@ -1,0 +1,35 @@
+{
+  "episodeTitle": "WHY CENTRAL BANKS MOVE BEFORE ELECTIONS",
+  "categoryTag": "PRIMARY RECORD",
+  "totalDurationSec": 12,
+  "cues": [
+    {
+      "id": "c01",
+      "speaker": "cole",
+      "startSec": 0.35,
+      "endSec": 5.8,
+      "text": "Everyone watched the viral rumor, while nobody checked the official treaty calendar.",
+      "expression": "serious"
+    },
+    {
+      "id": "c02",
+      "speaker": "maya",
+      "startSec": 6.05,
+      "endSec": 11.6,
+      "text": "Pull up the primary filing, and the real institutional power play becomes obvious.",
+      "expression": "emphatic"
+    }
+  ],
+  "shots": [
+    {
+      "id": "s01",
+      "startSec": 0,
+      "endSec": 12,
+      "layout": "real_photo_full",
+      "mediaPath": "studio/studio_set_1080p.jpg",
+      "sourceTag": "PRIMARY RECORD · ARCHIVE",
+      "locationDate": "NEW YORK STUDIO",
+      "headline": "FOLLOW THE OFFICIAL CALENDAR"
+    }
+  ]
+}

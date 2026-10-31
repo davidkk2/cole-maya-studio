@@ -1,0 +1,65 @@
+{
+  "name": "stickman-us-studio",
+  "version": "1.0.0",
+  "description": "Cole & Maya — US Primary-Source Investigative Studio",
+  "repository": {},
+  "license": "UNLICENSED",
+  "engines": {
+    "node": "^20.19.0 || ^22.13.0 || >=24"
+  },
+  "private": true,
+  "dependencies": {
+    "@react-three/fiber": "^9.8.2",
+    "@remotion/cli": "4.0.539",
+    "@remotion/effects": "4.0.539",
+    "@remotion/google-fonts": "^4.0.539",
+    "@remotion/media": "4.0.539",
+    "@remotion/shapes": "4.0.539",
+    "@remotion/three": "4.0.539",
+    "@remotion/transitions": "4.0.539",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "remotion": "4.0.539",
+    "three": "^0.187.0"
+  },
+  "devDependencies": {
+    "@remotion/eslint-config-flat": "4.0.539",
+    "@types/react": "19.2.7",
+    "@types/three": "^0.186.0",
+    "@types/web": "0.0.166",
+    "eslint": "10.12.0",
+    "prettier": "3.8.1",
+    "typescript": "5.9.3"
+  },
+  "scripts": {
+    "dev": "remotion studio",
+    "build": "remotion bundle",
+    "upgrade": "remotion upgrade",
+    "lint": "eslint src && tsc",
+    "audio:pilot": "python scripts/build_alcatraz_pilot_audio.py",
+    "render:pilot": "remotion render Pilot-AmberNoir-Alcatraz out/Pilot-AmberNoir-Alcatraz.mp4 --gl=angle",
+    "audio:docu10": "python scripts/build_alcatraz_10min_audio.py",
+    "render:docu10": "remotion render Alcatraz-10Min-Declassified out/Alcatraz-10Min-Declassified-US.mp4 --gl=angle",
+    "publish:docu10": "node scripts/youtube_publish.mjs upload --meta episodes/ep06_alcatraz_10min.json",
+    "render:branding": "remotion still ChannelAvatar-US out/channel-avatar.png && remotion still ChannelBanner-US out/channel-banner.png",
+    "render:ep1": "remotion render Ep01-Lagarde-EarlyExit out/Ep01-Lagarde-EarlyExit.mp4 --codec=h264 --crf=20",
+    "yt:auth": "node scripts/youtube_publish.mjs auth",
+    "yt:secrets": "node scripts/print_github_secrets.mjs",
+    "yt:setup": "node scripts/youtube_publish.mjs setup",
+    "yt:check": "node scripts/youtube_publish.mjs check",
+    "yt:upload": "node scripts/youtube_publish.mjs upload --meta episodes/ep01_lagarde_early_exit.json",
+    "yt:upload:prime": "node scripts/youtube_publish.mjs upload --meta episodes/ep01_lagarde_early_exit.json --schedule-us-prime",
+    "yt:thumb": "node scripts/youtube_publish.mjs thumbnail",
+    "publish:ep1": "node scripts/youtube_publish.mjs publish --meta episodes/ep01_lagarde_early_exit.json",
+    "publish:ep1:prime": "node scripts/youtube_publish.mjs publish --meta episodes/ep01_lagarde_early_exit.json --schedule-us-prime",
+    "auto:dry:short": "node scripts/auto_cloud_producer.mjs --slot short1",
+    "auto:dry:main": "node scripts/auto_cloud_producer.mjs --slot main",
+    "auto:pub:short1": "node scripts/auto_cloud_producer.mjs --slot short1 --upload",
+    "auto:pub:short2": "node scripts/auto_cloud_producer.mjs --slot short2 --upload",
+    "auto:pub:main": "node scripts/auto_cloud_producer.mjs --slot main --upload",
+    "auto:pub:short3": "node scripts/auto_cloud_producer.mjs --slot short3 --upload"
+  },
+  "allowScripts": {
+    "esbuild": false
+  }
+}
