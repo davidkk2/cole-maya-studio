@@ -12,6 +12,7 @@
 
 import dns from "node:dns";
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
@@ -596,8 +597,11 @@ Return a single JSON object matching this exact schema:
   const outShortCoverRel = `out/Auto-ShortCover-${slotKey}-${todayISO}.jpg`;
 
   console.log("🎬 Adim 5/5: Remotion Full HD / Shorts MP4 render aliniyor...");
+  const maxCpus = Math.max(1, os.cpus().length);
   const linuxRenderFlags =
-    process.platform === "linux" ? ["--concurrency=3", "--gl=swangle"] : [];
+    process.platform === "linux"
+      ? [`--concurrency=${maxCpus}`, "--gl=swangle"]
+      : [];
   const linuxStillFlags = process.platform === "linux" ? ["--gl=swangle"] : [];
   if (isShort) {
     runCmd(
