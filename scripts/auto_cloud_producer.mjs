@@ -143,21 +143,67 @@ async function getYouTubeAccessTokenOptional() {
   }
 }
 
-async function fetchExistingChannelTitles() {
+function getNextNewYorkHourISO(targetHour = 17) {
+  const now = new Date();
+  for (let addHours = 1; addHours <= 36; addHours++) {
+    const candidate = new Date(now.getTime() + addHours * 3600 * 1000);
+    candidate.setUTCMinutes(0, 0, 0);
+    if (candidate.getTime() - now.getTime() < 15 * 60 * 1000) {
+      continue;
+    }
+    const nyHour = Number(
+      new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/New_York",
+        hour: "numeric",
+        hourCycle: "h23",
+      }).format(candidate),
+    );
+    if (nyHour === targetHour) {
+      return candidate.toISOString();
+    }
+  }
+  return new Date(now.getTime() + 6 * 3600 * 1000).toISOString();
+}
+
+async function fetchExistingChannelState() {
   const token = await getYouTubeAccessTokenOptional();
-  if (!token) return [];
+  if (!token) return { titles: [], scheduledVideos: [] };
   try {
     const resp = await fetch(
       "https://www.googleapis.com/youtube/v3/search?part=snippet&forMine=true&type=video&maxResults=50",
       { headers: { Authorization: `Bearer ${token}` } },
     );
-    if (!resp.ok) return [];
+    if (!resp.ok) return { titles: [], scheduledVideos: [] };
     const data = await resp.json();
-    return (data.items || [])
+    const items = data.items || [];
+    const titles = items
       .map((it) => String(it.snippet?.title || "").trim())
       .filter(Boolean);
+    const ids = items
+      .map((it) => it.id?.videoId)
+      .filter(Boolean)
+      .slice(0, 50);
+
+    let scheduledVideos = [];
+    if (ids.length > 0) {
+      const vResp = await fetch(
+        `https://www.googleapis.com/youtube/v3/videos?part=snippet,status&id=${ids.join(",")}`,
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+      if (vResp.ok) {
+        const vData = await vResp.json();
+        scheduledVideos = (vData.items || [])
+          .filter((v) => v.status?.publishAt)
+          .map((v) => ({
+            id: v.id,
+            title: v.snippet?.title || "",
+            publishAt: v.status.publishAt,
+          }));
+      }
+    }
+    return { titles, scheduledVideos };
   } catch {
-    return [];
+    return { titles: [], scheduledVideos: [] };
   }
 }
 
@@ -327,8 +373,22 @@ async function main() {
   console.log(`⏰ Hedef : ${String(slot.nyHour).padStart(2, "0")}:00 America/New_York`);
   console.log(`=============================================================\n`);
 
-  const existingTitles = await fetchExistingChannelTitles();
+  const { titles: existingTitles, scheduledVideos } = await fetchExistingChannelState();
   console.log(`📚 Kanal arsiv kontrolu: ${existingTitles.length} mevcut/planli video basligi tarandi.`);
+
+  if (shouldUpload && !args["test-unlisted"] && !args.force) {
+    const targetPublishISO = getNextNewYorkHourISO(slot.nyHour);
+    const targetMs = new Date(targetPublishISO).getTime();
+    const collision = scheduledVideos.find(
+      (sv) => Math.abs(new Date(sv.publishAt).getTime() - targetMs) <= 45 * 60 * 1000,
+    );
+    if (collision) {
+      console.log(
+        `✅ Hedef saat dilimi (${targetPublishISO}) icin kanalda zaten zamanlanmis video var: "${collision.title}" (${collision.id}). Cift yuklemeyi onlemek icin bu vardiya atlandi.`,
+      );
+      return;
+    }
+  }
 
   const liveTrends = await harvestUSTrends();
   const trendLines = liveTrends

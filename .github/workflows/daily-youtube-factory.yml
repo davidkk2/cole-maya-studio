@@ -60,7 +60,7 @@ jobs:
         run: |
           npm ci
           python3 -m pip install --upgrade pip
-          python3 -m pip install edge-tts pillow numpy
+          python3 -m pip install -r requirements.txt
           npx remotion browser ensure
 
       - name: Determine active production slot

@@ -543,11 +543,14 @@ function getNextNewYorkHourISO(targetHour = 17) {
   for (let addHours = 1; addHours <= 36; addHours++) {
     const candidate = new Date(now.getTime() + addHours * 3600 * 1000);
     candidate.setUTCMinutes(0, 0, 0);
+    if (candidate.getTime() - now.getTime() < 15 * 60 * 1000) {
+      continue;
+    }
     const nyHour = Number(
       new Intl.DateTimeFormat("en-US", {
         timeZone: "America/New_York",
         hour: "numeric",
-        hour12: false,
+        hourCycle: "h23",
       }).format(candidate),
     );
     if (nyHour === targetHour) {
