@@ -29,10 +29,14 @@ concurrency:
   group: cole-maya-youtube-factory
   cancel-in-progress: false
 
+permissions:
+  contents: read
+  issues: write
+
 jobs:
   produce-and-publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
 
     steps:
       - name: Checkout studio repository
@@ -97,6 +101,7 @@ jobs:
 
       - name: Run Cole & Maya Autonomous Producer + YouTube Scheduler
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
@@ -110,4 +115,14 @@ jobs:
             node scripts/auto_cloud_producer.mjs --slot short3 --upload
           else
             node scripts/auto_cloud_producer.mjs --slot "$TARGET" --upload
+          fi
+
+      - name: Send emergency email alert on infrastructure failure
+        if: failure()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ ! -f ".tmp_auto_work/notified_failure.flag" ]; then
+            TARGET="${{ steps.resolve_slot.outputs.target || 'short1' }}"
+            node scripts/cloud_notifier.mjs --infra-failure "$TARGET"
           fi

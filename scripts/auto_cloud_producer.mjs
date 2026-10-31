@@ -15,6 +15,11 @@ import fs from "node:fs";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import {
+  notifyProductionFailed,
+  notifyProductionStarted,
+  notifyProductionSucceeded,
+} from "./cloud_notifier.mjs";
 
 dns.setDefaultResultOrder("ipv4first");
 
@@ -363,6 +368,16 @@ async function main() {
 
   const isShort = slot.mode === "short";
   const shouldUpload = Boolean(args.upload);
+  const workDir = path.join(ROOT_DIR, ".tmp_auto_work");
+  fs.mkdirSync(workDir, { recursive: true });
+  const failFlagPath = path.join(workDir, "notified_failure.flag");
+  if (fs.existsSync(failFlagPath)) fs.unlinkSync(failFlagPath);
+
+  let activeIssueNumber = null;
+  let activeTopicPlan = null;
+  const targetPublishISO = getNextNewYorkHourISO(slot.nyHour);
+
+  try {
   const geminiKey = loadGeminiKey();
   const pythonBin = getPythonBin();
 
@@ -377,7 +392,6 @@ async function main() {
   console.log(`📚 Kanal arsiv kontrolu: ${existingTitles.length} mevcut/planli video basligi tarandi.`);
 
   if (shouldUpload && !args["test-unlisted"] && !args.force) {
-    const targetPublishISO = getNextNewYorkHourISO(slot.nyHour);
     const targetMs = new Date(targetPublishISO).getTime();
     const collision = scheduledVideos.find(
       (sv) => Math.abs(new Date(sv.publishAt).getTime() - targetMs) <= 45 * 60 * 1000,
@@ -416,6 +430,8 @@ STRICT YOUTUBE MONETIZATION & EDITORIAL RULES:
 Return a single JSON object with this exact schema:
 {
   "selectedHeadline": "exact headline chosen from the live list",
+  "turkishTitle": "Clear, concise Turkish headline summarizing the selected story for the channel owner's email notification (<= 75 chars)",
+  "turkishSummary": "3 clear Turkish sentences explaining what the video covers, the hidden financial/geopolitical mechanism, and why it matters",
   "angleSummary": "2-3 sentences explaining the hidden institutional, treaty, financial, or historical angle Cole & Maya will uncover",
   "historicalParallel": "1-2 sentences naming a real documented historical/declassified parallel (especially rich if mode is main)",
   "wikipediaArticles": ["Exact_English_Wikipedia_Title_1", "Exact_English_Wikipedia_Title_2", "Exact_English_Wikipedia_Title_3", "Exact_English_Wikipedia_Title_4", "Exact_English_Wikipedia_Title_5", "Exact_English_Wikipedia_Title_6"],
@@ -425,11 +441,17 @@ Return a single JSON object with this exact schema:
 
   console.log("🧠 Adim 1/5: Gemini ile benzersiz trend konu ve birincil arsiv plani seciliyor...");
   const topicPlan = await callGeminiJSON(geminiKey, planPrompt, 0.45);
+  activeTopicPlan = topicPlan;
   console.log(`  🎯 Secilen Konu: ${topicPlan.selectedHeadline}`);
   console.log(`  📐 Aci: ${topicPlan.angleSummary}`);
 
-  const workDir = path.join(ROOT_DIR, ".tmp_auto_work");
-  fs.mkdirSync(workDir, { recursive: true });
+  activeIssueNumber = await notifyProductionStarted({
+    slotKey,
+    isShort,
+    targetPublishISO,
+    topicPlan,
+  });
+
   const planPath = path.join(workDir, `plan_${slotKey}.json`);
   const catalogPath = path.join(workDir, `catalog_${slotKey}.json`);
   const scriptPath = path.join(workDir, `script_${slotKey}.json`);
@@ -571,9 +593,27 @@ Return a single JSON object matching this exact schema:
     ? `out/Auto-${slotKey}-${todayISO}.mp4`
     : `out/Auto-Main-${todayISO}.mp4`;
   const outThumbRel = `out/Auto-MainThumb-${todayISO}.png`;
+  const outShortCoverRel = `out/Auto-ShortCover-${slotKey}-${todayISO}.jpg`;
 
   console.log("🎬 Adim 5/5: Remotion Full HD / Shorts MP4 render aliniyor...");
+  const linuxRenderFlags =
+    process.platform === "linux" ? ["--concurrency=3", "--gl=swangle"] : [];
+  const linuxStillFlags = process.platform === "linux" ? ["--gl=swangle"] : [];
   if (isShort) {
+    runCmd(
+      "npx",
+      [
+        "remotion",
+        "still",
+        "Auto-ShortEpisode",
+        outShortCoverRel,
+        "--frame=45",
+        "--image-format=jpeg",
+        "--quality=88",
+        ...linuxStillFlags,
+      ],
+      "RenderShortEmailCover",
+    );
     runCmd(
       "npx",
       [
@@ -583,13 +623,14 @@ Return a single JSON object matching this exact schema:
         outVideoRel,
         "--codec=h264",
         "--crf=20",
+        ...linuxRenderFlags,
       ],
       "RenderShortMP4",
     );
   } else {
     runCmd(
       "npx",
-      ["remotion", "still", "Auto-MainThumbnail", outThumbRel],
+      ["remotion", "still", "Auto-MainThumbnail", outThumbRel, ...linuxStillFlags],
       "RenderMainThumbnail",
     );
     runCmd(
@@ -601,6 +642,7 @@ Return a single JSON object matching this exact schema:
         outVideoRel,
         "--codec=h264",
         "--crf=20",
+        ...linuxRenderFlags,
       ],
       "RenderMainMP4",
     );
@@ -680,10 +722,46 @@ Return a single JSON object matching this exact schema:
       uploadArgs.push("--schedule-ny-hour", String(slot.nyHour));
     }
     runCmd("node", uploadArgs, "YouTubeUploadAndSchedule");
+
+    const receiptPath = path.join(ROOT_DIR, "out", "last-upload-receipt.json");
+    const receipt = fs.existsSync(receiptPath)
+      ? JSON.parse(fs.readFileSync(receiptPath, "utf8"))
+      : null;
+    const videoAbsPath = path.resolve(ROOT_DIR, outVideoRel);
+    const videoBytes = fs.existsSync(videoAbsPath)
+      ? fs.statSync(videoAbsPath).size
+      : 0;
+    const coverAbsPath = path.resolve(
+      ROOT_DIR,
+      isShort ? outShortCoverRel : outThumbRel,
+    );
+
+    await notifyProductionSucceeded({
+      issueNumber: activeIssueNumber,
+      slotKey,
+      isShort,
+      topicPlan,
+      scriptJson,
+      receipt,
+      durationSec: Number(finalManifest.totalDurationSec || 0),
+      videoBytes,
+      coverImagePath: coverAbsPath,
+    });
   } else {
     console.log(
       `\nℹ️  Yerel kuru-calistirma (dry-run) tamamlandi! Yuklemek icin '--upload' parametresi ekleyin.\n   Cikti MP4: ${outVideoRel}`,
     );
+  }
+  } catch (err) {
+    fs.writeFileSync(failFlagPath, "1", "utf8");
+    await notifyProductionFailed({
+      issueNumber: activeIssueNumber,
+      slotKey,
+      isShort,
+      topicPlan: activeTopicPlan,
+      errorMessage: err.stack || err.message || String(err),
+    });
+    throw err;
   }
 }
 
