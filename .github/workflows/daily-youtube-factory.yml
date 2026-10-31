@@ -2,14 +2,19 @@ name: Cole & Maya — Autonomous Daily YouTube Factory (1 Main + 3 Shorts)
 
 on:
   schedule:
+    # Off-peak prime minutes (:17 primary + :42 automatic backup; slot-collision guard skips in 1s if already scheduled)
     # 1) Shorts #1 -> Morning US Commute (Schedules for 09:00 America/New_York)
-    - cron: "30 11 * * *"
+    - cron: "17 11 * * *"
+    - cron: "42 11 * * *"
     # 2) Shorts #2 -> Midday US Feed (Schedules for 13:00 America/New_York)
-    - cron: "30 15 * * *"
+    - cron: "17 15 * * *"
+    - cron: "42 15 * * *"
     # 3) Main 16:9 Documentary -> US Evening Prime-Time (Schedules for 17:00 America/New_York)
-    - cron: "30 18 * * *"
+    - cron: "17 18 * * *"
+    - cron: "42 18 * * *"
     # 4) Shorts #3 -> Late Evening US Scroll (Schedules for 21:00 America/New_York)
-    - cron: "30 23 * * *"
+    - cron: "17 23 * * *"
+    - cron: "42 23 * * *"
 
   workflow_dispatch:
     inputs:
@@ -90,12 +95,12 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "target=${{ github.event.inputs.slot }}" >> "$GITHUB_OUTPUT"
           else
-            case "${{ github.event.schedule }}" in
-              "30 11 * * *") echo "target=short1" >> "$GITHUB_OUTPUT" ;;
-              "30 15 * * *") echo "target=short2" >> "$GITHUB_OUTPUT" ;;
-              "30 18 * * *") echo "target=main"   >> "$GITHUB_OUTPUT" ;;
-              "30 23 * * *") echo "target=short3" >> "$GITHUB_OUTPUT" ;;
-              *)             echo "target=short1" >> "$GITHUB_OUTPUT" ;;
+            UTC_HOUR=$(date -u +%H)
+            case "$UTC_HOUR" in
+              10|11|12|13) echo "target=short1" >> "$GITHUB_OUTPUT" ;;
+              14|15|16|17) echo "target=short2" >> "$GITHUB_OUTPUT" ;;
+              18|19|20|21) echo "target=main"   >> "$GITHUB_OUTPUT" ;;
+              *)           echo "target=short3" >> "$GITHUB_OUTPUT" ;;
             esac
           fi
 
