@@ -7,7 +7,9 @@
  */
 
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
+import { spawnSync } from "node:child_process";
 
 function getGitHubContext() {
   const token = process.env.GITHUB_TOKEN?.trim();
@@ -75,45 +77,71 @@ export function formatDualTimezone(isoString) {
 export async function uploadCoverImagePublic(localFilePath) {
   try {
     if (!localFilePath || !fs.existsSync(localFilePath)) return null;
-    const bytes = fs.readFileSync(localFilePath);
     const ext = path.extname(localFilePath).toLowerCase() || ".jpg";
-    const mime = ext === ".png" ? "image/png" : "image/jpeg";
-    const fileName = `cover${ext}`;
+    const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+    const destName = `cover-${stamp}${ext}`;
 
-    // Primary: Catbox direct CDN
-    try {
-      const fd = new FormData();
-      fd.append("reqtype", "fileupload");
-      fd.append("fileToUpload", new Blob([bytes], { type: mime }), fileName);
-      const r = await fetch("https://catbox.moe/user/api.php", {
-        method: "POST",
-        body: fd,
-        signal: AbortSignal.timeout(20_000),
-      });
-      const url = (await r.text()).trim();
-      if (r.ok && url.startsWith("https://")) {
-        return url;
+    // Primary (100% first-party GitHub CDN, immune to datacenter IP blocks & token expiry):
+    // Pushes cover preview via repo-scoped SSH deploy key to <owner>/cole-maya-covers
+    const deployKey = process.env.COVERS_DEPLOY_KEY?.trim();
+    const ctx = getGitHubContext();
+    const owner = ctx?.owner || "davidkk2";
+    const coversRepo = process.env.COVERS_REPO?.trim() || `${owner}/cole-maya-covers`;
+
+    if (deployKey) {
+      const tmpRoot = fs.mkdtempSync(path.join(os.tmpdir(), "cm-cover-"));
+      try {
+        const keyPath = path.join(tmpRoot, "id_ed25519");
+        fs.writeFileSync(keyPath, deployKey.endsWith("\n") ? deployKey : `${deployKey}\n`, {
+          mode: 0o600,
+        });
+        const repoDir = path.join(tmpRoot, "repo");
+        const sshCmd = `ssh -i "${keyPath}" -o IdentitiesOnly=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null`;
+        const gitEnv = { ...process.env, GIT_SSH_COMMAND: sshCmd };
+
+        const cloneRes = spawnSync(
+          "git",
+          ["clone", "--depth=1", `git@github.com:${coversRepo}.git`, repoDir],
+          { env: gitEnv, encoding: "utf8" },
+        );
+        if (cloneRes.status === 0) {
+          const coversDir = path.join(repoDir, "covers");
+          fs.mkdirSync(coversDir, { recursive: true });
+          fs.copyFileSync(localFilePath, path.join(coversDir, destName));
+          spawnSync("git", ["config", "user.name", "Cole & Maya Bot"], { cwd: repoDir });
+          spawnSync("git", ["config", "user.email", "actions@users.noreply.github.com"], {
+            cwd: repoDir,
+          });
+          spawnSync("git", ["add", `covers/${destName}`], { cwd: repoDir });
+          spawnSync("git", ["commit", "-m", `chore(cover): ${destName}`], { cwd: repoDir });
+          const pushRes = spawnSync("git", ["push", "origin", "HEAD:main"], {
+            cwd: repoDir,
+            env: gitEnv,
+            encoding: "utf8",
+          });
+          if (pushRes.status === 0) {
+            return `https://raw.githubusercontent.com/${coversRepo}/main/covers/${destName}`;
+          }
+        }
+      } finally {
+        fs.rmSync(tmpRoot, { recursive: true, force: true });
       }
-    } catch {
-      // Fallback below
     }
 
-    // Fallback: Litterbox 72h CDN
-    const fd2 = new FormData();
-    fd2.append("reqtype", "fileupload");
-    fd2.append("time", "72h");
-    fd2.append("fileToUpload", new Blob([bytes], { type: mime }), fileName);
-    const r2 = await fetch(
-      "https://litterbox.catbox.moe/resources/internals/api.php",
-      {
-        method: "POST",
-        body: fd2,
-        signal: AbortSignal.timeout(20_000),
-      },
-    );
-    const url2 = (await r2.text()).trim();
-    if (r2.ok && url2.startsWith("https://")) {
-      return url2;
+    // Fallback for local testing: Catbox direct CDN
+    const bytes = fs.readFileSync(localFilePath);
+    const mime = ext === ".png" ? "image/png" : "image/jpeg";
+    const fd = new FormData();
+    fd.append("reqtype", "fileupload");
+    fd.append("fileToUpload", new Blob([bytes], { type: mime }), destName);
+    const r = await fetch("https://catbox.moe/user/api.php", {
+      method: "POST",
+      body: fd,
+      signal: AbortSignal.timeout(20_000),
+    });
+    const url = (await r.text()).trim();
+    if (r.ok && url.startsWith("https://")) {
+      return url;
     }
     return null;
   } catch {

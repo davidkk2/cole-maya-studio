@@ -102,6 +102,7 @@ jobs:
       - name: Run Cole & Maya Autonomous Producer + YouTube Scheduler
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COVERS_DEPLOY_KEY: ${{ secrets.COVERS_DEPLOY_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
